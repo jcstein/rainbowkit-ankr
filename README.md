@@ -1,3 +1,134 @@
+## 🧱 Prerequisites
+
+- [☊ Node.js](https://nodejs.dev/download/)
+- [🧵 Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable)
+- [🖥 VS Code](https://code.visualstudio.com/Download)
+
+## Set up our React App
+
+Run the following command in your terminal to install the blank project, change to the new directory and start the development environment
+
+```bash
+yarn create react-app rainbowkit-ankr --template @chakra-ui && cd rainbowkit-ankr && yarn start
+```
+
+### Install RainbowKit
+
+Install RainbowKit and its dependencies, [wagmi](https://wagmi-xyz.vercel.app/) and [ethers](https://docs.ethers.io/).
+
+```bash
+npm install @rainbow-me/rainbowkit wagmi ethers
+```
+
+### Import RainbowKit
+
+Import RainbowKit, wagmi, and ethers to your `index.js` file
+
+```jsx
+import '@rainbow-me/rainbowkit/styles.css';
+
+import {
+  apiProvider,
+  configureChains,
+  getDefaultWallets,
+  RainbowKitProvider,
+} from '@rainbow-me/rainbowkit';
+import { chain, createClient, WagmiProvider } from 'wagmi';
+```
+
+### Configure RainbowKit
+
+Configure the wallets, chains and generate the connectors. You will also set up a `wagmi` client in `index.js`
+
+```jsx
+// imports
+
+const { chains, provider } = configureChains(
+  [chain.mainnet],
+  [
+    apiProvider.jsonRpc(chain => ({
+      rpcUrl: `https://rpc.ankr.com/eth`,
+    })),
+  ]
+);
+
+const { connectors } = getDefaultWallets({
+  appName: 'RainbowKit & Ankr dApp',
+  chains,
+});
+
+const wagmiClient = createClient({
+  autoConnect: true,
+  connectors,
+  provider,
+});
+```
+
+### Wrap your Chakra-UI React App
+
+Wrap your application with `RainbowKitProvider` and `WagmiProvider` in `index.js`
+
+```jsx
+function App() {
+  return (
+    <WagmiProvider client={wagmiClient}>
+      <RainbowKitProvider chains={chains}>
+        <ChakraProvider theme={theme}>
+          <YourChakraReactApp />
+        </ChakraProvider>
+      </RainbowKitProvider>
+    </WagmiProvider>
+  );
+}
+
+root.render(
+  <StrictMode>
+    <WagmiProvider client={wagmiClient}>
+      <RainbowKitProvider chains={chains}>
+        <ColorModeScript />
+        <App />
+      </RainbowKitProvider>
+    </WagmiProvider>
+  </StrictMode>
+);
+```
+
+### Add the connect wallet button
+
+Import `ConnectButton` and add the component to your `App.js` file
+
+```jsx
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+
+function App() {
+  return (
+    <ChakraProvider theme={theme}>
+      {/* styling & components... */}
+      <ConnectButton />
+      {/* styling & components... */}
+    </ChakraProvider>
+  );
+}
+```
+
+### Fix the error
+
+You will see an error regarding webpack and utils, run the following command in your terminal to fix this
+
+```
+npm install util
+```
+
+### 🎉 Log in with your Wallet of choice
+
+Congratulations! You just created a React App with Ankr, RainbowKit, and Chakra-UI (with built in dark mode 😎)
+
+![2022-05-16 06.28.48.gif](https://ipfs.io/ipfs/bafybeibwizmd2xnhbugx5sevbkeergw23spchc6sqzqvlmpulkgqtchdqu/2022-05-16%2006.28.48.gif)
+
+Next, you can deploy this to a hosting site of your choice. If you do, please comment the link below to share with the community!
+
++++++++++++++++++++++++++++++++++++++++++++++++
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
