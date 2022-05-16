@@ -1,3 +1,5 @@
+![ankr-rainbowkit.png](https://ipfs.io/ipfs/bafybeidesrckupy6z5vc2lsop6hkhqcky7ie2u4ebsbs4tguonjc6gvq2y/AnkrRainbowKit-04.png)
+
 ## 🧱 Prerequisites
 
 - [☊ Node.js](https://nodejs.dev/download/)
